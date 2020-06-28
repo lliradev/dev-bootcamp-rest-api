@@ -1,0 +1,107 @@
+swagger: '2.0'
+info:
+  title: Dev Bootcamp Rest API
+  description: Documentación para la restful api
+  version: 1.0.0
+host: localhost:3000
+basePath: /api
+tags:
+  - name: Registro de nuevo usuario
+    description: API para registro de usuario
+  - name: Autenticación
+    description: API para autorización de usuarios
+  - name: Perfil
+    description: Perfil del usuario
+schemes:
+  - http
+paths:
+  /register:
+    post:
+      tags:
+        - Registro de nuevo usuario
+      summary: Registrar usuario
+      description: Registrar un nuevo usuario en el sistema
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: Registro de usuario
+          description: Registrar un nuevo usuario
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
+  /authenticate:
+    post:
+      tags:
+        - Autenticación
+      summary: Autenticar un usuario
+      description: Autenticar un usuario para generar el json web token
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: Autenticar usuario
+          description: Autenticar a un usuario al systema y generar un token
+          required: true
+          schema:
+            $ref: '#/definitions/Auth'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Auth'
+  /profile:
+    get:
+      tags:
+        - Perfil
+      summary: Perfil un usuario
+      description: Perfil del usuario
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: authorization
+          description: Acceder mediante el token
+          in: header
+          type: string
+          required: true
+      responses:
+        200:
+          description: OK
+definitions:
+  User:
+    required:
+      - fullname
+      - email
+      - password
+    properties:
+      _id:
+        type: string
+      fullname:
+        type: string
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+        format: password
+  Auth:
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+        format: password

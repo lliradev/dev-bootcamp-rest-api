@@ -4,6 +4,9 @@ const morgan = require('morgan');
 const cors = require('cors');
 const passport = require('passport');
 const multer = require('./libs/multer');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('src/config/swagger.yaml');
 
 // Inicializando
 const app = express();
@@ -41,5 +44,6 @@ app.use((error, req, res, next) => {
 
 // Routes
 app.use('/api', require('./routes/auth.routes'));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;
