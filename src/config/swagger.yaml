@@ -1,4 +1,4 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   title: Dev Bootcamp Rest API
   description: Documentación para la restful api
@@ -31,12 +31,12 @@ paths:
           description: Registrar un nuevo usuario
           required: true
           schema:
-            $ref: '#/definitions/User'
+            $ref: "#/definitions/User"
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/User'
+            $ref: "#/definitions/User"
   /authenticate:
     post:
       tags:
@@ -50,15 +50,15 @@ paths:
       parameters:
         - in: body
           name: Autenticar usuario
-          description: Autenticar a un usuario al systema y generar un token
+          description: Autenticar a un usuario al sistema y generar un token
           required: true
           schema:
-            $ref: '#/definitions/Auth'
+            $ref: "#/definitions/Auth"
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/Auth'
+            $ref: "#/definitions/Auth"
   /profile:
     get:
       tags:
