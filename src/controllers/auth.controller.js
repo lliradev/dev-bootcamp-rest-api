@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/user.model');
 const passport = require('passport');
 const _ = require('lodash');
 const userCtrl = {};

@@ -12,6 +12,8 @@ tags:
     description: API para autorización de usuarios
   - name: Perfil
     description: Perfil del usuario
+  - name: Empleados
+    description: API para los empleados
 schemes:
   - http
 paths:
@@ -78,6 +80,46 @@ paths:
       responses:
         200:
           description: OK
+  /employees:
+    parameters:
+      - name: authorization
+        description: Access token to authorize the user
+        in: header
+        type: string
+        required: true
+    post:
+      tags:
+        - Empleados
+      summary: Crear un nuevo empleado
+      description: Crear un empleado y como respuesta nos debe volver un 201 de creado
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: employee
+          description: Crear un nuevo empleado
+          required: true
+          schema:
+            $ref: "#/definitions/Employee"
+      responses:
+        201:
+          description: Created
+    get:
+      tags:
+        - Empleados
+      summary: Obtener una lista de empleados
+      description: Todos los empleados
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Employees"
 definitions:
   User:
     required:
@@ -105,3 +147,56 @@ definitions:
       password:
         type: string
         format: password
+  Employee:
+    required:
+      - fullName
+      - hireDate
+      - salary
+    properties:
+      _id:
+        type: string
+      fullName:
+        type: string
+      hireDate:
+        type: string
+        format: date-time
+      isPermanent:
+        type: boolean
+        default: false
+      salary:
+        type: number
+        format: double
+  Employees:
+    properties:
+      docs:
+        type: array
+        items:
+          $ref: "#/definitions/Employee"
+      totalDocs:
+        type: integer
+        format: int32
+      limit:
+        type: integer
+        format: int32
+      totalPages:
+        type: integer
+        format: int32
+      page:
+        type: integer
+        format: int32
+      pagingCounter:
+        type: integer
+        format: int32
+      hasPrevPage:
+        type: boolean
+      hasNextPage:
+        type: boolean
+      prevPage:
+        type: integer
+        format: int32
+      nextPage:
+        type: integer
+        format: int32
+externalDocs:
+  url: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
+  description: Swagger RESTful API Documentation Specification

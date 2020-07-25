@@ -45,5 +45,6 @@ app.use((error, req, res, next) => {
 // Routes
 app.use('/api', require('./routes/auth.routes'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/employees', require('./routes/employee.routes'));
 
 module.exports = app;
