@@ -56,4 +56,22 @@ employeeCtrl.findAll = async (req, res) => {
   }
 };
 
+employeeCtrl.findById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const employee = await Employee.findById(id);
+    if (employee) {
+      res.status(200).send(employee);
+    } else {
+      res.status(404).send({
+        message: `No se encontró el empleado con id: ${id}`,
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: error.message || 'Se produjo un error al encontrar el empleado.',
+    });
+  }
+};
+
 module.exports = employeeCtrl;

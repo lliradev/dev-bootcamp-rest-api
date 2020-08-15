@@ -106,6 +106,8 @@ paths:
       responses:
         201:
           description: Created
+          schema:
+            $ref: "#/definitions/Message"
     get:
       tags:
         - Empleados
@@ -197,6 +199,10 @@ definitions:
       nextPage:
         type: integer
         format: int32
+  Message:
+    properties:
+      message:
+        type: string
 externalDocs:
   url: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
   description: Swagger RESTful API Documentation Specification
