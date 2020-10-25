@@ -34,6 +34,8 @@ employeeCtrl.findAll = async (req, res) => {
     const searchSalary = req.query.salary
       ? { salary: parseInt(req.query.salary) }
       : {};
+    const orderBy = req.query.orderBy ? req.query.orderBy : '_id';
+    const shape = req.query.shape ? 'asc' : 'desc';
     const query = {
       ...searchFullName,
       ...searchHireDate,
@@ -41,18 +43,16 @@ employeeCtrl.findAll = async (req, res) => {
       ...searchSalary,
     };
     const options = {
-      page: req.query.page || 1,
-      limit: parseInt(req.query.limit) || 5,
-      sort: { _id: -1 },
+      page: parseInt(req.query.page) || 1,
+      limit: parseInt(req.query.limit, 10) || 5,
+      sort: { [orderBy]: shape },
     };
     console.log(query);
     console.log(options);
     const employees = await Employee.paginate(query, options);
     res.status(200).send(employees);
   } catch (error) {
-    res.status(500).send({
-      message: error.message || 'Se produjo un error al cargar los empleados.',
-    });
+    res.status(500).send({ message: error.message });
   }
 };
 
